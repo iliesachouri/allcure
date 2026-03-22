@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AllCure — Stop l'envie d'alcool</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Montserrat:wght@300;400;500;600;700&display=swap');
+:root{--gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A30;--black:#0A0A0A;--dark:#111;--dark2:#1A1A1A;--white:#FFFFFF;--gray:#888;--green:#22C55E}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;overflow-x:hidden}
+#particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;background:var(--gold);border-radius:50%;opacity:0;animation:floatP linear infinite}
+@keyframes floatP{0%{transform:translateY(100vh) scale(0);opacity:0}10%{opacity:.5}90%{opacity:.2}100%{transform:translateY(-10vh);opacity:0}}
+
+#cookieBanner{position:fixed;bottom:65px;left:0;right:0;z-index:9999;background:rgba(10,10,10,.97);border-top:1px solid rgba(201,168,76,.3);border-bottom:1px solid rgba(201,168,76,.3);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;backdrop-filter:blur(16px)}
+.cookie-text{font-size:12px;color:rgba(255,255,255,.7);max-width:700px;margin:0}
+.cookie-text a{color:var(--gold);text-decoration:none}
+.cookie-btns{display:flex;gap:12px;flex-shrink:0}
+.cookie-accept{padding:10px 24px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#000;border:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer}
+.cookie-refuse{padding:10px 24px;background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.2);font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer}
+
+.news-ticker{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));padding:8px 0;overflow:hidden}
+.ticker-track{display:flex;animation:tickerMove 30s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{padding:0 40px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#000;display:flex;align-items:center;gap:10px}
+.ticker-dot{width:5px;height:5px;background:#000;border-radius:50%;opacity:.5;flex-shrink:0}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(10,10,10,.97);border-top:1px solid rgba(201,168,76,.3);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;backdrop-filter:blur(16px);transform:translateY(100%);transition:transform .4s ease}
+.sticky-bar.visible{transform:translateY(0)}
+.sticky-bar-left{display:flex;align-items:center;gap:12px}
+.sticky-bar-img{width:40px;height:auto}
+.sticky-bar-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sticky-bar-sub{font-size:10px;color:var(--gray)}
+.sticky-bar-price{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center}
+.sticky-bar-price small{display:block;font-size:10px;color:var(--green);font-family:'Montserrat',sans-serif;-webkit-text-fill-color:var(--green);font-weight:700}
+.sticky-bar-btn{padding:12px 24px;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));color:#000;border:none;font-size:10px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.sticky-bar-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,.5)}
+
+nav{position:fixed;top:36px;width:100%;z-index:100;padding:16px 60px;display:flex;justify-content:space-between;align-items:center;background:rgba(10,10,10,0.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,168,76,0.15)}
+.logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+nav ul{list-style:none;display:flex;gap:32px}
+nav a{color:rgba(255,255,255,.65);text-decoration:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;transition:color .3s}
+nav a:hover{color:var(--gold-light)}
+.nav-btn{padding:10px 22px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#000;border:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:pointer;transition:transform .3s,box-shadow .3s}
+.nav-btn:hover{transform:translateY(-1px);box-shadow:0 8px 25px rgba(201,168,76,.4)}
+
+#hero{position:relative;z-index:1;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:130px 60px 80px;gap:20px;overflow:hidden}
+.hero-bg{position:absolute;right:-200px;top:50%;transform:translateY(-50%);width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.07),transparent 65%);pointer-events:none}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border:1px solid rgba(201,168,76,.4);font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:28px;animation:fadeUp .7s ease both}
+.hero-eyebrow span{width:18px;height:1px;background:var(--gold);display:inline-block}
+h1{font-family:'Playfair Display',serif;font-size:clamp(38px,4.5vw,64px);font-weight:900;line-height:1.08;margin-bottom:24px;animation:fadeUp .7s .1s ease both}
+h1 em{font-style:normal;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.85;margin-bottom:28px;font-weight:300;max-width:400px;animation:fadeUp .7s .2s ease both}
+.badges{display:flex;gap:10px;margin-bottom:28px;flex-wrap:wrap;animation:fadeUp .7s .25s ease both}
+.badge{display:flex;align-items:center;gap:7px;padding:6px 12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.6)}
+.badge-green{border-color:rgba(34,197,94,.4);color:#22C55E}
+.hero-price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;animation:fadeUp .7s .3s ease both;flex-wrap:wrap}
+.price{font-family:'Playfair Display',serif;font-size:52px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.price-note{font-size:13px;color:var(--gray)}
+.price-highlight{font-size:13px;font-weight:700;color:var(--green);letter-spacing:.5px;margin-bottom:24px;display:flex;align-items:center;gap:8px;animation:fadeUp .7s .32s ease both}
+.price-highlight::before{content:'●';color:var(--green);font-size:10px;animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero-actions{display:flex;gap:14px;animation:fadeUp .7s .35s ease both;flex-wrap:wrap}
+.btn-gold{padding:16px 36px;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));color:#000;border:none;font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.btn-gold::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-gold:hover::after{transform:translateX(100%)}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 18px 45px rgba(201,168,76,.45)}
+.btn-ghost{padding:16px 28px;background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2);font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;transition:all .3s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+
+.hero-right{position:relative;display:grid;grid-template-columns:110px 1fr 110px;align-items:center;gap:10px;min-height:560px}
+.tags-left{display:flex;flex-direction:column;gap:12px;align-items:flex-end}
+.tags-right{display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.tag{padding:8px 12px;border-radius:8px;font-weight:700;color:#fff;backdrop-filter:blur(12px);display:flex;flex-direction:column;gap:3px;box-shadow:0 8px 24px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.08);animation:tagF linear infinite}
+.tag-ico{font-size:14px;margin-bottom:2px}
+.tag-title{font-weight:700;line-height:1.2}
+.tag-sub{font-size:9px;opacity:.65;letter-spacing:.3px}
+.tag-1{width:130px;font-size:11px;animation-duration:3.8s;animation-delay:0s;background:linear-gradient(135deg,#14532d,#166534);border-color:rgba(34,197,94,.35)}
+.tag-2{width:115px;font-size:10px;animation-duration:4.5s;animation-delay:.5s;background:linear-gradient(135deg,#1e3a5f,#1d4ed8);border-color:rgba(59,130,246,.35)}
+.tag-3{width:128px;font-size:11px;animation-duration:3.2s;animation-delay:1s;background:linear-gradient(135deg,#7c2d12,#c2410c);border-color:rgba(249,115,22,.35)}
+.tag-4{width:108px;font-size:10px;animation-duration:5s;animation-delay:.3s;background:linear-gradient(135deg,#581c87,#7e22ce);border-color:rgba(168,85,247,.35)}
+.tag-5{width:136px;font-size:11px;animation-duration:3.6s;animation-delay:1.4s;background:linear-gradient(135deg,#713f12,#a16207);border-color:rgba(201,168,76,.45)}
+.tag-6{width:112px;font-size:10px;animation-duration:4.2s;animation-delay:.7s;background:linear-gradient(135deg,#0c4a6e,#0369a1);border-color:rgba(14,165,233,.35)}
+.tag-7{width:122px;font-size:11px;animation-duration:4.8s;animation-delay:1.8s;background:linear-gradient(135deg,#134e4a,#0f766e);border-color:rgba(20,184,166,.35)}
+@keyframes tagF{0%{transform:translateY(0) rotate(0deg) scale(1)}20%{transform:translateY(-10px) rotate(.5deg) scale(1.02)}45%{transform:translateY(-5px) rotate(-.3deg) scale(1.01)}70%{transform:translateY(-14px) rotate(.4deg) scale(1.03)}100%{transform:translateY(0) rotate(0deg) scale(1)}}
+
+.product-zone{position:relative;display:flex;align-items:center;justify-content:center;height:540px;width:100%}
+.glow-1{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.2),transparent 65%);animation:glowP 3s ease-in-out infinite;left:50%;top:50%;transform:translate(-50%,-50%)}
+.glow-2{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.09),transparent 60%);animation:glowP 3s ease-in-out infinite .5s;left:50%;top:50%;transform:translate(-50%,-50%)}
+@keyframes glowP{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.6}50%{transform:translate(-50%,-50%) scale(1.1);opacity:1}}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,0);animation:ringPulse 3s linear infinite;left:50%;top:50%;transform:translate(-50%,-50%)}
+@keyframes ringPulse{0%{width:80px;height:80px;border-color:rgba(201,168,76,.7);opacity:1}100%{width:420px;height:420px;border-color:rgba(201,168,76,0);opacity:0}}
+.product-3d{width:340px;height:auto;display:block;position:relative;z-index:2;filter:drop-shadow(0 30px 60px rgba(0,0,0,.7)) drop-shadow(0 0 40px rgba(201,168,76,.35));animation:fly3d 7s ease-in-out infinite;cursor:grab}
+@keyframes fly3d{0%{transform:translateY(0px) rotateY(0deg) rotateX(0deg) scale(1)}15%{transform:translateY(-20px) rotateY(22deg) rotateX(4deg) scale(1.03)}30%{transform:translateY(-10px) rotateY(12deg) rotateX(-3deg) scale(1.01)}50%{transform:translateY(-24px) rotateY(-18deg) rotateX(5deg) scale(1.04)}65%{transform:translateY(-12px) rotateY(-8deg) rotateX(-2deg) scale(1.02)}80%{transform:translateY(-18px) rotateY(8deg) rotateX(3deg) scale(1.02)}100%{transform:translateY(0px) rotateY(0deg) rotateX(0deg) scale(1)}}
+.bot-shadow{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:200px;height:24px;background:radial-gradient(ellipse,rgba(201,168,76,.4),transparent 70%);border-radius:50%;animation:shadA 7s ease-in-out infinite}
+@keyframes shadA{0%,100%{transform:translateX(-50%) scaleX(1);opacity:.5}50%{transform:translateX(-50%) scaleX(.6);opacity:.15}}
+.sparkle{position:absolute;background:var(--gold);border-radius:50%;animation:sparkA linear infinite;z-index:3}
+@keyframes sparkA{0%{transform:translate(0,0) scale(0);opacity:0}20%{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}80%{opacity:.4}100%{transform:translate(var(--tx2),var(--ty2)) scale(0);opacity:0}}
+
+#stats{position:relative;z-index:1;padding:50px 80px;background:linear-gradient(180deg,rgba(201,168,76,.05),transparent);border-bottom:1px solid rgba(201,168,76,.12);display:flex;justify-content:center;gap:80px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-n{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-top:5px}
+
+.sec{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:100px 40px}
+.eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,48px);font-weight:700;line-height:1.18;margin-bottom:50px}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.step{padding:36px 26px;background:var(--dark2);border:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+.step::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s}
+.step:hover::after{transform:scaleX(1)}
+.step:hover{transform:translateY(-5px);border-color:rgba(201,168,76,.3)}
+.step-n{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:rgba(201,168,76,.09);line-height:1;margin-bottom:16px}
+.step-ico{font-size:28px;margin-bottom:14px}
+.step-t{font-size:14px;font-weight:600;color:var(--gold-light);margin-bottom:10px}
+.step-d{font-size:13px;color:rgba(255,255,255,.48);line-height:1.8}
+
+.cta-band{position:relative;z-index:1;padding:50px 60px;background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.03));border-top:1px solid rgba(201,168,76,.2);border-bottom:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}
+.cta-band-text h3{font-family:'Playfair Display',serif;font-size:clamp(20px,2.5vw,32px);font-weight:700;margin-bottom:8px}
+.cta-band-text p{font-size:13px;color:rgba(255,255,255,.5);max-width:500px}
+.btn-cta{padding:16px 40px;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));color:#000;border:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;white-space:nowrap;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;flex-shrink:0}
+.btn-cta::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-cta:hover::after{transform:translateX(100%)}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 15px 40px rgba(201,168,76,.5)}
+
+#ingr{position:relative;z-index:1;padding:80px 40px;background:var(--dark2);border-top:1px solid rgba(255,255,255,.05)}
+.ingr-inner{max-width:1000px;margin:0 auto}
+.ingr-header{text-align:center;margin-bottom:50px}
+.ingr-header .eyebrow{display:block;margin-bottom:14px}
+.ingr-header p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.85;max-width:520px;margin:0 auto}
+.ingr-list{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ingr{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 18px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.06);transition:border-color .3s,background .3s;text-align:center}
+.ingr:hover{border-color:rgba(201,168,76,.28);background:rgba(201,168,76,.04)}
+.ingr-ico{font-size:26px;margin-bottom:6px}
+.ingr-n{font-size:12px;font-weight:700;color:var(--gold-light);letter-spacing:1px;text-transform:uppercase}
+.ingr-d{font-size:11px;color:var(--gray);line-height:1.55;margin-top:3px}
+
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:50px}
+.test{padding:30px;background:var(--dark2);border:1px solid rgba(255,255,255,.06);transition:transform .3s,border-color .3s}
+.test:hover{transform:translateY(-4px);border-color:rgba(201,168,76,.18)}
+.stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:14px}
+.test-t{font-size:13px;color:rgba(255,255,255,.58);line-height:1.8;margin-bottom:18px;font-style:italic}
+.test-a{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+
+#protocol{position:relative;z-index:1;padding:100px 40px;background:var(--dark2);border-top:1px solid rgba(255,255,255,.05)}
+.protocol-inner{max-width:1000px;margin:0 auto}
+.protocol-header{text-align:center;margin-bottom:60px}
+.protocol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.protocol-card{padding:32px;background:rgba(0,0,0,.3);border:1px solid rgba(201,168,76,.12);transition:border-color .3s,transform .3s}
+.protocol-card:hover{border-color:rgba(201,168,76,.3);transform:translateY(-4px)}
+.protocol-month{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block}
+.protocol-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:10px;color:var(--gold-light)}
+.protocol-detail{font-size:13px;color:rgba(255,255,255,.5);line-height:1.75}
+.protocol-spray{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:6px 12px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.2);font-size:11px;color:var(--gold)}
+
+/* ═══ SECTION ACHATS — 2 OFFRES CÔTE À CÔTE ═══ */
+#buy{position:relative;z-index:1;padding:100px 40px 160px;background:var(--black);border-top:1px solid rgba(201,168,76,.12);text-align:center}
+.buy-section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);font-weight:700;margin-bottom:60px;line-height:1.15}
+.buy-section-eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px}
+
+/* Grille 2 offres */
+.buy-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1000px;margin:0 auto}
+
+/* Chaque offre */
+.buy-offer{display:flex;flex-direction:column;align-items:center}
+
+/* Zone produit flottant */
+.buy-product-zone{
+  width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;height:240px;margin-bottom:0;
+}
+.buy-glow-ring{position:absolute;width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.2),transparent 65%);animation:glowP 3s ease-in-out infinite;pointer-events:none}
+.buy-bottle-1{width:130px;height:auto;display:block;margin:0 auto;position:relative;z-index:2;animation:buyFloat 4s ease-in-out infinite;filter:drop-shadow(0 20px 45px rgba(0,0,0,.7)) drop-shadow(0 0 35px rgba(201,168,76,.35))}
+.buy-bottle-4{width:260px;height:auto;display:block;margin:0 auto;position:relative;z-index:2;animation:buyFloat 4s ease-in-out infinite .5s;filter:drop-shadow(0 20px 45px rgba(0,0,0,.7)) drop-shadow(0 0 35px rgba(201,168,76,.35))}
+@keyframes buyFloat{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-14px) rotate(.5deg)}}
+.buy-bottle-shadow{width:100px;height:12px;background:radial-gradient(ellipse,rgba(201,168,76,.28),transparent 70%);border-radius:50%;margin:8px auto 0;animation:buyShad 4s ease-in-out infinite}
+@keyframes buyShad{0%,100%{transform:scaleX(1);opacity:.45}50%{transform:scaleX(.7);opacity:.18}}
+
+/* Carte */
+.buy-card{width:100%;padding:36px 32px;background:var(--dark2);border:1px solid rgba(201,168,76,.22);position:relative;overflow:hidden;text-align:center}
+.buy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold-dark),var(--gold-light),var(--gold-dark))}
+.buy-card.star{border-color:rgba(201,168,76,.5);background:linear-gradient(145deg,#1e1a0e,var(--dark2))}
+
+/* Badge meilleure offre */
+.buy-best-badge{position:absolute;top:14px;right:14px;padding:4px 10px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#000;font-size:9px;letter-spacing:2px;font-weight:700;text-transform:uppercase;animation:badgePulse 2s ease-in-out infinite}
+@keyframes badgePulse{0%,100%{box-shadow:0 0 0 0 rgba(201,168,76,.4)}50%{box-shadow:0 0 0 8px rgba(201,168,76,0)}}
+
+.buy-card-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:10px}
+.buy-price-big{font-family:'Playfair Display',serif;font-size:60px;font-weight:900;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:6px;display:block;text-align:center}
+.buy-sub-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);display:block;margin-bottom:14px;text-align:center}
+.buy-gift-line{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(34,197,94,.05));border:1px solid rgba(34,197,94,.4);margin-bottom:18px;font-size:12px;font-weight:700;color:var(--green);animation:greenPulse 2s ease-in-out infinite}
+@keyframes greenPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.2)}50%{box-shadow:0 0 0 6px rgba(34,197,94,0)}}
+.buy-feats{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;text-align:left}
+.buy-f{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.6)}
+.buy-f::before{content:'✦';color:var(--gold);font-size:9px;flex-shrink:0}
+.btn-buy{width:100%;padding:18px;background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));color:#000;border:none;font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;cursor:pointer;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;margin-bottom:12px}
+.btn-buy::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-buy:hover::after{transform:translateX(100%)}
+.btn-buy:hover{transform:translateY(-3px);box-shadow:0 25px 65px rgba(201,168,76,.55)}
+.btn-buy-ghost{width:100%;padding:18px;background:transparent;color:var(--gold);border:1px solid rgba(201,168,76,.4);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:600;cursor:pointer;transition:all .3s;margin-bottom:12px}
+.btn-buy-ghost:hover{background:rgba(201,168,76,.08)}
+.secure{font-size:11px;color:var(--gray)}
+.urgency{margin-top:12px;padding:10px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);font-size:11px;color:var(--gold-light);letter-spacing:1px;text-align:center}
+
+footer{position:relative;z-index:1;padding:40px 60px 100px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.f-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.f-txt{font-size:11px;color:rgba(255,255,255,.28);letter-spacing:1px}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap}
+.footer-links a{font-size:11px;color:rgba(255,255,255,.5);text-decoration:none;letter-spacing:1px;transition:color .3s;text-transform:uppercase}
+.footer-links a:hover{color:var(--gold)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  nav{top:34px;padding:14px 24px}
+  nav ul,.nav-btn{display:none}
+  #hero{display:flex;flex-direction:column;padding:100px 20px 60px;text-align:center;gap:20px}
+  .hero-right{display:flex;flex-direction:column;align-items:center;gap:16px;min-height:auto;width:100%;order:-1}
+  .product-zone{width:100%;height:280px;order:0}
+  .product-3d{width:200px !important;height:auto !important;display:block !important}
+  .tags-left,.tags-right{display:flex;flex-direction:row;flex-wrap:wrap;justify-content:center;gap:8px;width:100%;order:1}
+  .tag{width:auto !important;min-width:90px;max-width:130px}
+  .hero-actions,.badges{justify-content:center}
+  .hero-actions{flex-direction:column;align-items:center}
+  .price-highlight{justify-content:center}
+  .steps,.test-grid{grid-template-columns:1fr}
+  .ingr-list{grid-template-columns:repeat(2,1fr)}
+  .protocol-grid,.buy-grid{grid-template-columns:1fr}
+  #stats{gap:36px;padding:40px 24px}
+  .cta-band{flex-direction:column;text-align:center;padding:36px 24px}
+  #buy,#protocol{padding-left:20px;padding-right:20px}
+  .buy-card{padding:24px 16px}
+  .buy-price-big{font-size:48px}
+  .sticky-bar-sub{display:none}
+  footer{flex-direction:column;text-align:center;padding:30px 20px 100px}
+  .footer-links{justify-content:center}
+  #cookieBanner{padding:14px 20px;bottom:65px}
+  .buy-bottle-4{width:200px}
+}
+</style>
+</head>
+<body>
+
+<div id="cookieBanner">
+  <p class="cookie-text">🍪 Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre <a href="politique-cookies.html">politique de cookies</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-accept" onclick="acceptCookies()">Accepter</button>
+    <button class="cookie-refuse" onclick="refuseCookies()">Refuser</button>
+  </div>
+</div>
+
+<div id="particles"></div>
+
+<div class="news-ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 NOUVEAU — AllCure disponible</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🎁 Cure 3 mois = 1 flacon offert</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🇫🇷 Fabriqué en France</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>💊 2 sprays matin · 2 sprays soir</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 6 plantes fraîches · 100% naturel</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⚡ Livraison offerte</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>✦ +5000 personnes libérées</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🍃 Sans dépendance · Végane</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 NOUVEAU — AllCure disponible</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🎁 Cure 3 mois = 1 flacon offert</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🇫🇷 Fabriqué en France</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>💊 2 sprays matin · 2 sprays soir</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🌿 6 plantes fraîches · 100% naturel</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⚡ Livraison offerte</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>✦ +5000 personnes libérées</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🍃 Sans dépendance · Végane</span>
+  </div>
+</div>
+
+<div class="sticky-bar" id="stickyBar">
+  <div class="sticky-bar-left">
+    <img class="sticky-bar-img" src="https://i.imgur.com/WZA3tcy.png" alt="AllCure">
+    <div><div class="sticky-bar-name">AllCure</div><div class="sticky-bar-sub">Cure 3 mois · 4 flacons</div></div>
+  </div>
+  <div class="sticky-bar-price">89,70€<small>🎁 1 flacon offert</small></div>
+  <button class="sticky-bar-btn" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Commander</button>
+</div>
+
+<nav>
+  <div class="logo">AllCure</div>
+  <ul>
+    <li><a href="#protocol">La cure</a></li>
+    <li><a href="#ingr">Formule</a></li>
+    <li><a href="#test">Avis</a></li>
+  </ul>
+  <button class="nav-btn" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Commander — 89,70€</button>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span></span>Nouveau · Formule Exclusive<span></span></div>
+    <h1>Stop à l'envie<br>d'<em>alcool</em>,<br>pour de bon.</h1>
+    <p class="hero-desc">AllCure est la première solution naturelle en spray qui coupe l'envie d'alcool. 2 sprays matin, 2 sprays soir — plus un flacon anti-craving pour l'apéro.</p>
+    <div class="badges">
+      <div class="badge badge-green">🌿 100% Naturel</div>
+      <div class="badge">🇫🇷 Made in France</div>
+      <div class="badge badge-green">🎁 1 flacon offert</div>
+    </div>
+    <div class="hero-price-row">
+      <div class="price">89,70€</div>
+      <div class="price-note">cure 3 mois</div>
+    </div>
+    <div class="price-highlight">● 4 flacons dont 1 offert — 29,90€ économisés !</div>
+    <div class="hero-actions">
+      <button class="btn-gold" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Commencer ma cure</button>
+      <button class="btn-ghost" onclick="document.getElementById('protocol').scrollIntoView({behavior:'smooth'})">Le protocole →</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="tags-left">
+      <div class="tag tag-1"><div class="tag-ico">🌿</div><div class="tag-title">Plantes fraîches</div><div class="tag-sub">Formule naturelle</div></div>
+      <div class="tag tag-3"><div class="tag-ico">🎁</div><div class="tag-title">1 flacon offert</div><div class="tag-sub">Cure 3 mois</div></div>
+      <div class="tag tag-5"><div class="tag-ico">⚡</div><div class="tag-title">Anti-craving express</div><div class="tag-sub">Pour l'apéro</div></div>
+      <div class="tag tag-7"><div class="tag-ico">✦</div><div class="tag-title">Résultats 2 sem.</div><div class="tag-sub">Prouvé</div></div>
+    </div>
+    <div class="product-zone">
+      <div class="glow-1"></div>
+      <div class="glow-2"></div>
+      <div class="ring" style="animation-delay:0s;animation-duration:3s"></div>
+      <div class="ring" style="animation-delay:1s;animation-duration:3s"></div>
+      <div class="ring" style="animation-delay:2s;animation-duration:3s"></div>
+      <img class="product-3d" id="bottle" src="https://i.imgur.com/WZA3tcy.png" alt="AllCure Spray">
+      <div class="bot-shadow"></div>
+    </div>
+    <div class="tags-right">
+      <div class="tag tag-2"><div class="tag-ico">💊</div><div class="tag-title">2 sprays x2/jour</div><div class="tag-sub">Protocole</div></div>
+      <div class="tag tag-4"><div class="tag-ico">🍃</div><div class="tag-title">Sans dépendance</div><div class="tag-sub">100% végane</div></div>
+      <div class="tag tag-6"><div class="tag-ico">🇫🇷</div><div class="tag-title">Made in France</div><div class="tag-sub">Certifié</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stat reveal"><div class="stat-n" data-target="94">0</div><div class="stat-l">% de satisfaction</div></div>
+  <div class="stat reveal"><div class="stat-n" data-target="3">0</div><div class="stat-l">mois de cure</div></div>
+  <div class="stat reveal"><div class="stat-n" data-target="100">0</div><div class="stat-l">% naturel</div></div>
+  <div class="stat reveal"><div class="stat-n" data-target="5000">0</div><div class="stat-l">clients libérés</div></div>
+</section>
+
+<section id="protocol">
+  <div class="protocol-inner">
+    <div class="protocol-header reveal">
+      <div class="eyebrow">Le protocole AllCure</div>
+      <h2 class="sec-title">La cure 3 mois,<br>comment ça marche ?</h2>
+    </div>
+    <div class="protocol-grid">
+      <div class="protocol-card reveal">
+        <span class="protocol-month">Mois 1 · Flacon 1</span>
+        <div class="protocol-title">🌱 Phase d'amorçage</div>
+        <div class="protocol-detail">Les 6 plantes fraîches commencent leur action. Les premières envies s'atténuent dès la 2ème semaine.</div>
+        <div class="protocol-spray">💊 2 sprays matin · 2 sprays soir</div>
+      </div>
+      <div class="protocol-card reveal">
+        <span class="protocol-month">Mois 2 · Flacon 2</span>
+        <div class="protocol-title">🌿 Phase de renforcement</div>
+        <div class="protocol-detail">L'effet s'installe durablement. Les envies diminuent nettement. Les soirées deviennent plus légères.</div>
+        <div class="protocol-spray">💊 2 sprays matin · 2 sprays soir</div>
+      </div>
+      <div class="protocol-card reveal">
+        <span class="protocol-month">Mois 3 · Flacon 3</span>
+        <div class="protocol-title">✨ Phase de consolidation</div>
+        <div class="protocol-detail">Les nouvelles habitudes s'ancrent profondément. Votre liberté se consolide durablement.</div>
+        <div class="protocol-spray">💊 2 sprays matin · 2 sprays soir</div>
+      </div>
+      <div class="protocol-card reveal" style="border-color:rgba(34,197,94,.3);background:linear-gradient(135deg,rgba(34,197,94,.07),rgba(0,0,0,.3))">
+        <span class="protocol-month" style="color:var(--green)">🎁 Flacon 4 — OFFERT</span>
+        <div class="protocol-title" style="color:var(--green)">🍸 Anti-craving express</div>
+        <div class="protocol-detail">Votre bouclier pour l'apéro et les moments à risque. Quelques sprays dans la bouche dès que l'envie se fait sentir.</div>
+        <div class="protocol-spray" style="background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--green)">✦ Au fil de la journée · Au besoin</div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:50px">
+      <button class="btn-gold reveal" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Démarrer ma cure — 89,70€</button>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="sec">
+    <div class="eyebrow reveal">Mode d'emploi</div>
+    <h2 class="sec-title reveal">Simple comme<br>un geste quotidien</h2>
+    <div class="steps">
+      <div class="step reveal"><div class="step-n">01</div><div class="step-ico">🌅</div><div class="step-t">Matin — 2 sprays</div><div class="step-d">Au réveil, 2 sprays sous la langue. Les plantes commencent leur action dès le matin.</div></div>
+      <div class="step reveal"><div class="step-n">02</div><div class="step-ico">🌙</div><div class="step-t">Soir — 2 sprays</div><div class="step-d">Avant le dîner, 2 sprays sous la langue. Coupez l'envie avant qu'elle s'installe.</div></div>
+      <div class="step reveal"><div class="step-n">03</div><div class="step-ico">🍸</div><div class="step-t">Anti-craving — au besoin</div><div class="step-d">Le flacon offert : à tout moment. Soirée, apéro, stress… l'envie disparaît.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="cta-band-text"><h3>Prêt à reprendre le contrôle ?</h3><p>4 flacons, 3 mois de cure, 1 flacon anti-craving offert. Livraison offerte.</p></div>
+  <button class="btn-cta" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Commander — 89,70€</button>
+</div>
+
+<section id="ingr">
+  <div class="ingr-inner">
+    <div class="ingr-header reveal">
+      <span class="eyebrow">Formule exclusive</span>
+      <h2 class="sec-title">6 plantes fraîches,<br>1 formule puissante</h2>
+      <p>100% naturel, végane, sans dépendance. Fabriqué en France.</p>
+    </div>
+    <div class="ingr-list reveal">
+      <div class="ingr"><div class="ingr-ico">🌼</div><div class="ingr-n">Escholtzia</div><div class="ingr-d">Apaise le système nerveux et réduit les envies compulsives.</div></div>
+      <div class="ingr"><div class="ingr-ico">🌺</div><div class="ingr-n">Coquelicot</div><div class="ingr-d">Effet calmant naturel, diminue l'envie de consommer.</div></div>
+      <div class="ingr"><div class="ingr-ico">🌸</div><div class="ingr-n">Rhodiola</div><div class="ingr-d">Adaptogène contre le stress déclencheur d'envie d'alcool.</div></div>
+      <div class="ingr"><div class="ingr-ico">🌿</div><div class="ingr-n">Valériane</div><div class="ingr-d">Favorise la relaxation et réduit les tensions nerveuses.</div></div>
+      <div class="ingr"><div class="ingr-ico">🦋</div><div class="ingr-n">Passiflore</div><div class="ingr-d">Apaise les troubles liés au sevrage, plante de la sérénité.</div></div>
+      <div class="ingr"><div class="ingr-ico">🌳</div><div class="ingr-n">Bourgeon Tilleul</div><div class="ingr-d">Extrait frais aux propriétés calmantes et régénératrices.</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band reveal">
+  <div class="cta-band-text"><h3>La nature à votre service 🌿</h3><p>6 plantes fraîches pour couper l'envie d'alcool. Formule unique, fabriquée en France.</p></div>
+  <button class="btn-cta" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">Essayer AllCure →</button>
+</div>
+
+<section id="test">
+  <div class="sec">
+    <div class="eyebrow reveal" style="text-align:center">Témoignages</div>
+    <h2 class="sec-title reveal" style="text-align:center;margin-bottom:0">Des vies transformées</h2>
+    <div class="test-grid">
+      <div class="test reveal"><div class="stars">★★★★★</div><p class="test-t">"La cure 3 mois a tout changé. Le flacon anti-craving est parfait pour les soirées. Je ne bois plus depuis 2 mois !"</p><div class="test-a">— Marie T., 42 ans · Lyon</div></div>
+      <div class="test reveal"><div class="stars">★★★★★</div><p class="test-t">"2 sprays matin, 2 le soir. Au bout de 6 semaines je ne ressentais plus le besoin de boire. Résultat incroyable."</p><div class="test-a">— Karim D., 38 ans · Paris</div></div>
+      <div class="test reveal"><div class="stars">★★★★☆</div><p class="test-t">"Le 4ème flacon offert pour l'apéro c'est vraiment malin. Quelques sprays et l'envie disparaît immédiatement."</p><div class="test-a">— Sophie M., 55 ans · Bordeaux</div></div>
+    </div>
+    <div style="text-align:center;margin-top:50px">
+      <button class="btn-gold reveal" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Je commence ma cure — 89,70€</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION ACHAT — 2 OFFRES CÔTE À CÔTE ═══ -->
+<section id="buy">
+  <span class="buy-section-eyebrow reveal">Nos offres</span>
+  <div class="buy-section-title reveal">Choisissez votre cure</div>
+
+  <div class="buy-grid">
+
+    <!-- OFFRE 1 FLACON -->
+    <div class="buy-offer reveal">
+      <div class="buy-product-zone">
+        <div class="buy-glow-ring"></div>
+        <img class="buy-bottle-1" src="https://i.imgur.com/WZA3tcy.png" alt="AllCure 1 flacon">
+        <div class="buy-bottle-shadow"></div>
+      </div>
+      <div class="buy-card">
+        <span class="buy-card-label">Découverte</span>
+        <div class="buy-price-big">29,90€</div>
+        <span class="buy-sub-label">1 flacon 20ml · 1 mois</span>
+        <div class="buy-feats">
+          <div class="buy-f">1 flacon AllCure 20ml</div>
+          <div class="buy-f">2 sprays matin · 2 sprays soir</div>
+          <div class="buy-f">Livraison offerte</div>
+          <div class="buy-f">6 plantes fraîches · 100% naturel</div>
+        </div>
+        <button class="btn-buy-ghost" onclick="window.open('https://buy.stripe.com/28E9AUaaAcQYan9da867S01','_blank')">Commander — 29,90€</button>
+        <div class="secure">🔒 Paiement sécurisé · Stripe</div>
+      </div>
+    </div>
+
+    <!-- OFFRE CURE 3 MOIS -->
+    <div class="buy-offer reveal">
+      <div class="buy-product-zone">
+        <div class="buy-glow-ring"></div>
+        <img class="buy-bottle-4" src="https://i.imgur.com/I0dZSl4.png" alt="AllCure cure 3 mois">
+        <div class="buy-bottle-shadow"></div>
+      </div>
+      <div class="buy-card star">
+        <div class="buy-best-badge">⭐ Meilleure offre</div>
+        <span class="buy-card-label">Cure complète</span>
+        <div class="buy-price-big">89,70€</div>
+        <span class="buy-sub-label">4 flacons 20ml · 3 mois</span>
+        <div class="buy-gift-line">🎁 4 flacons dont 1 offert — 29,90€ économisés !</div>
+        <div class="buy-feats">
+          <div class="buy-f">3 flacons cure + 1 anti-craving OFFERT</div>
+          <div class="buy-f">2 sprays matin · 2 sprays soir · 30j/flacon</div>
+          <div class="buy-f">6 plantes fraîches · 100% naturel &amp; végane</div>
+          <div class="buy-f">Livraison offerte · Fabriqué en France</div>
+        </div>
+        <button class="btn-buy" onclick="window.open('https://buy.stripe.com/bJefZi96waIQ7aX0nm67S02','_blank')">🛒 Commander — 89,70€</button>
+        <div class="secure">🔒 Paiement sécurisé · SSL · Stripe</div>
+        <div class="urgency">⚡ Stock limité — Commandez avant rupture</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="f-txt">© 2025 AllCure — SO FAST CAR SAS</div>
+  <div class="f-logo">AllCure</div>
+  <div class="footer-links">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="politique-confidentialite.html">Confidentialité</a>
+    <a href="politique-cookies.html">Cookies</a>
+    <a href="cgv.html">CGV</a>
+  </div>
+</footer>
+
+<script>
+const pc=document.getElementById('particles');
+for(let i=0;i<60;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`left:${Math.random()*100}vw;width:${Math.random()*4+1}px;height:${Math.random()*4+1}px;animation-duration:${Math.random()*14+8}s;animation-delay:${Math.random()*12}s`;pc.appendChild(p);}
+const pzone=document.querySelector('.product-zone');
+if(pzone){for(let i=0;i<18;i++){const s=document.createElement('div');s.className='sparkle';const tx=(Math.random()-.5)*280,ty=(Math.random()-.5)*380,tx2=(Math.random()-.5)*380,ty2=(Math.random()-.5)*480;s.style.cssText=`left:${25+Math.random()*50}%;top:${10+Math.random()*70}%;width:${Math.random()*5+2}px;height:${Math.random()*5+2}px;--tx:${tx}px;--ty:${ty}px;--tx2:${tx2}px;--ty2:${ty2}px;animation-duration:${Math.random()*4+2}s;animation-delay:${Math.random()*5}s`;pzone.appendChild(s);}}
+const bottle=document.getElementById('bottle');
+const hr=document.querySelector('.hero-right');
+if(hr&&bottle){
+  hr.addEventListener('mousemove',e=>{
+    const r=hr.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    const dx=(e.clientX-cx)/r.width*2,dy=(e.clientY-cy)/r.height*2;
+    bottle.style.transform=`rotateY(${dx*25}deg) rotateX(${-dy*20}deg) scale(1.05)`;
+    bottle.style.transition='transform 0.1s ease';
+    bottle.style.filter=`drop-shadow(${-dx*15}px ${dy*10}px 45px rgba(0,0,0,.8)) drop-shadow(0 0 45px rgba(201,168,76,.5))`;
+  });
+  hr.addEventListener('mouseleave',()=>{bottle.style.transform='';bottle.style.transition='transform 0.8s ease';bottle.style.filter='';setTimeout(()=>bottle.style.transition='',800);});
+}
+window.addEventListener('scroll',()=>{document.getElementById('stickyBar').classList.toggle('visible',window.scrollY>window.innerHeight*.5);});
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('show'),i*70)});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function count(el,target){let cur=0,step=target/55;const lbl=el.closest('.stat').querySelector('.stat-l').textContent;const sfx=target>=1000?'+':lbl.includes('%')?'%':'';const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=Math.round(cur)+sfx;if(cur>=target)clearInterval(t)},22);}
+const so=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('[data-target]').forEach(n=>count(n,+n.dataset.target));so.unobserve(e.target)}});},{threshold:.25});
+so.observe(document.getElementById('stats'));
+function acceptCookies(){document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieConsent','accepted');}
+function refuseCookies(){document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookieConsent','refused');}
+window.addEventListener('load',()=>{if(localStorage.getItem('cookieConsent'))document.getElementById('cookieBanner').style.display='none';});
+</script>
+</body>
+</html>
