@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de Cookies — AllCure</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap');
+:root{--gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#9A7A30;--black:#0A0A0A;--dark2:#1A1A1A;--white:#FFFFFF;--gray:#888}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'Montserrat',sans-serif;line-height:1.8;cursor:none}
+#cursor-outer{position:fixed;width:36px;height:36px;border:2px solid var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,opacity .2s;opacity:0}
+#cursor-inner{position:fixed;width:6px;height:6px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);opacity:0}
+#cursor-cross{position:fixed;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);opacity:0;transition:opacity .2s}
+.cross-line{position:absolute;background:rgba(201,168,76,.35)}
+.cross-h{width:20px;height:1px;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cross-v{width:1px;height:20px;top:50%;left:50%;transform:translate(-50%,-50%)}
+body.cursor-hover #cursor-outer{width:52px;height:52px;border-color:var(--gold-light);background:rgba(201,168,76,.08)}
+.news-ticker{position:fixed;top:0;left:0;right:0;z-index:999;background:linear-gradient(90deg,var(--gold-dark),var(--gold),var(--gold-light),var(--gold),var(--gold-dark));padding:7px 0;overflow:hidden;height:32px}
+.ticker-track{display:flex;animation:tickerMove 30s linear infinite;white-space:nowrap;width:max-content}
+.ticker-item{padding:0 40px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#000;display:flex;align-items:center;gap:10px}
+.ticker-dot{width:5px;height:5px;background:#000;border-radius:50%;opacity:.5;flex-shrink:0}
+@keyframes tickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+header{background:rgba(10,10,10,.97);border-bottom:1px solid rgba(201,168,76,.2);padding:14px 60px;display:flex;justify-content:space-between;align-items:center;position:fixed;top:32px;left:0;right:0;z-index:100}
+.logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;letter-spacing:4px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;cursor:none}
+.back-btn{padding:8px 18px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#000;border:none;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:700;cursor:none;text-decoration:none;transition:transform .2s}
+.back-btn:hover{transform:translateY(-1px)}
+.container{max-width:860px;margin:0 auto;padding:120px 40px 80px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,46px);font-weight:700;margin-bottom:12px;background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.subtitle{font-size:13px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:50px;padding-bottom:20px;border-bottom:1px solid rgba(201,168,76,.2)}
+h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold-light);margin:40px 0 16px}
+p{font-size:14px;color:rgba(255,255,255,.7);margin-bottom:14px}
+ul{font-size:14px;color:rgba(255,255,255,.7);margin:0 0 14px 24px}
+ul li{margin-bottom:8px}
+a{color:var(--gold);text-decoration:none;cursor:none}
+a:hover{text-decoration:underline}
+.cookie-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13px}
+.cookie-table th{background:rgba(201,168,76,.15);color:var(--gold-light);padding:12px 16px;text-align:left;border:1px solid rgba(201,168,76,.2)}
+.cookie-table td{padding:12px 16px;border:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.65)}
+.cookie-table tr:hover td{background:rgba(201,168,76,.05)}
+.footer-legal{text-align:center;padding:40px;border-top:1px solid rgba(201,168,76,.1);margin-top:60px;font-size:12px;color:var(--gray)}
+.footer-legal a{color:var(--gold);margin:0 8px}
+@media(max-width:600px){body{cursor:auto}#cursor-outer,#cursor-inner,#cursor-cross{display:none}header{padding:12px 16px}.container{padding:110px 16px 60px}.cookie-table{font-size:11px}}
+</style>
+</head>
+<body>
+<div id="cursor-outer"></div>
+<div id="cursor-inner"></div>
+<div id="cursor-cross"><div class="cross-line cross-h"></div><div class="cross-line cross-v"></div></div>
+
+<div class="news-ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-dot"></span>🆕 NOUVEAU 2026 — AllCure vient de sortir</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🔥 -35% Lancement · Offre limitée</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🇫🇷 Fabriqué en France · 6 plantes fraîches</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⚡ 89,70€ au lieu de 139,60€</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⏰ Prix lancement bientôt terminé</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🆕 NOUVEAU 2026 — AllCure vient de sortir</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🔥 -35% Lancement · Offre limitée</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>🇫🇷 Fabriqué en France · 6 plantes fraîches</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⚡ 89,70€ au lieu de 139,60€</span>
+    <span class="ticker-item"><span class="ticker-dot"></span>⏰ Prix lancement bientôt terminé</span>
+  </div>
+</div>
+
+<header>
+  <a href="index.html" class="logo">AllCure</a>
+  <a href="index.html" class="back-btn">← Retour au site</a>
+</header>
+
+<div class="container">
+  <h1>Politique de Cookies</h1>
+  <div class="subtitle">Dernière mise à jour : Mars 2026</div>
+
+  <h2>1. Qu'est-ce qu'un cookie ?</h2>
+  <p>Un cookie est un petit fichier texte déposé sur votre appareil lors de votre visite sur notre site. Il permet de mémoriser certaines informations pour améliorer votre expérience de navigation.</p>
+
+  <h2>2. Cookies utilisés sur ce site</h2>
+  <table class="cookie-table">
+    <tr><th>Nom</th><th>Type</th><th>Finalité</th><th>Durée</th></tr>
+    <tr><td>allcure_cookies</td><td>Fonctionnel</td><td>Mémorise votre consentement aux cookies</td><td>12 mois</td></tr>
+    <tr><td>allcure_deadline</td><td>Fonctionnel</td><td>Mémorise la date de fin de l'offre lancement</td><td>Session</td></tr>
+    <tr><td>Stripe cookies</td><td>Paiement</td><td>Sécurisation des transactions de paiement</td><td>Session</td></tr>
+  </table>
+
+  <h2>3. Cookies strictement nécessaires</h2>
+  <p>Ces cookies sont indispensables au fonctionnement du site et ne peuvent pas être désactivés. Ils ne stockent aucune information personnelle identifiable.</p>
+
+  <h2>4. Cookies de paiement</h2>
+  <p>Notre partenaire de paiement <strong style="color:var(--gold-light)">Stripe</strong> utilise des cookies pour sécuriser vos transactions. Ces cookies sont régis par la <a href="https://stripe.com/fr/privacy" target="_blank">politique de confidentialité de Stripe</a>.</p>
+
+  <h2>5. Gestion de vos préférences</h2>
+  <p>Lors de votre première visite sur notre site, un bandeau vous permet d'accepter ou refuser les cookies non essentiels.</p>
+  <p>Vous pouvez également gérer vos cookies depuis votre navigateur :</p>
+  <ul>
+    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank">Google Chrome</a></li>
+    <li><a href="https://support.mozilla.org/fr/kb/cookies-informations-sites-enregistrent" target="_blank">Mozilla Firefox</a></li>
+    <li><a href="https://support.apple.com/fr-fr/guide/safari/sfri11471/mac" target="_blank">Safari</a></li>
+  </ul>
+
+  <h2>6. Contact</h2>
+  <p>Pour toute question : <a href="mailto:allcure.info@gmail.com">allcure.info@gmail.com</a></p>
+
+  <div class="footer-legal">
+    © 2025 AllCure — SO FAST CAR SAS<br>
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="politique-confidentialite.html">Confidentialité</a>
+    <a href="politique-cookies.html">Cookies</a>
+    <a href="cgv.html">CGV</a>
+  </div>
+</div>
+
+<script>
+const cursorOuter=document.getElementById('cursor-outer');
+const cursorInner=document.getElementById('cursor-inner');
+const cursorCross=document.getElementById('cursor-cross');
+let mouseX=0,mouseY=0,outerX=0,outerY=0,isVisible=false;
+function showCursor(){if(!isVisible){cursorOuter.style.opacity='1';cursorInner.style.opacity='1';cursorCross.style.opacity='1';isVisible=true;}}
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;cursorInner.style.left=mouseX+'px';cursorInner.style.top=mouseY+'px';cursorCross.style.left=mouseX+'px';cursorCross.style.top=mouseY+'px';showCursor();});
+function animateCursor(){outerX+=(mouseX-outerX)*.15;outerY+=(mouseY-outerY)*.15;cursorOuter.style.left=outerX+'px';cursorOuter.style.top=outerY+'px';requestAnimationFrame(animateCursor);}
+animateCursor();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));});
+document.addEventListener('mouseleave',()=>{cursorOuter.style.opacity='0';cursorInner.style.opacity='0';cursorCross.style.opacity='0';isVisible=false;});
+document.addEventListener('mouseenter',()=>showCursor());
+document.addEventListener('mousedown',()=>{cursorOuter.style.transform='translate(-50%,-50%) scale(.8)';});
+document.addEventListener('mouseup',()=>{cursorOuter.style.transform='translate(-50%,-50%) scale(1)';});
+</script>
+</body>
+</html>
